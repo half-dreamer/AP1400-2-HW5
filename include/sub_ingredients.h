@@ -2,18 +2,38 @@
 #define SUB_INGREDIENTS_H
 
 #include <ingredient.h>
+#define DEFCLASS(Myclass, pricePerUnit)                                  \
+    class Myclass : public Ingredient                                    \
+    {                                                                    \
+        public: \
+        Myclass(size_t units) : Ingredient{pricePerUnit, units} \
+        {                                                       \
+            this->name = #Myclass;                              \
+        }                                                       \
+                                                                \
+        virtual Ingredient *copy()                              \
+        {                                                       \
+            return new Myclass(units);                    \
+        };                                                      \
+        virtual std::string get_name()                          \
+        {                                                       \
+            return this->name;                                  \
+        }                                                       \
+    };
 
-class Cinnamon : public Ingredient
-{
-public:
-    Cinnamon(size_t units) : Ingredient{5, units}
-    {
-        this->name = "Cinnamon";
-    }
+DEFCLASS(Cinnamon, 5);
 
-    virtual Ingredient *copy() { return new Cinnamon(units);}
-    virtual std::string get_name() {return this->name;}
-};
+// class Cinnamon : public Ingredient
+// {
+// public:
+//     Cinnamon(size_t units) : Ingredient{5, units}
+//     {
+//         this->name = "Cinnamon";
+//     }
+
+//     virtual Ingredient *copy() { return new Cinnamon(units);}
+//     virtual std::string get_name() {return this->name;}
+// };
 
 class Chocolate : public Ingredient
 {
